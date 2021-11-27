@@ -25,3 +25,21 @@ variable "enable_classiclink_dns_support" {
 variable "preferred_number_of_public_subnets" {
 default = null
 }
+
+variable "preferred_number_of_private_subnets" {
+default = null
+}
+
+variable "environment" {
+    default = "dev"
+}
+variable "default_tags" {
+
+    default = {
+        Env     = "Dev"
+        Owner   = "DevOps Team"
+        Project = "AWS Infrastructure IaC" 
+    }
+     
+     description = "Default tags for AWS resource"
+}
