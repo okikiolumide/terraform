@@ -27,7 +27,8 @@ resource "aws_route_table_association" "public" {
         aws_route_table.public_route_table
     ]
 
-    subnet_id = element(aws_subnet.public.*.id, 0)
+    count           = length(aws_subnet.public[*].id)
+    subnet_id       = element(aws_subnet.public[*].id, count.index)
     route_table_id  = aws_route_table.public_route_table.id
 }
 
@@ -47,7 +48,7 @@ resource "aws_route_table" "private_route_table" {
     }
 
     tags = {
-                Name = format("Private-RouteTable-%s", var.environment)
+        Name = format("Private-RouteTable-%s", var.environment)
     } 
 
 }
@@ -60,6 +61,7 @@ resource "aws_route_table_association" "private" {
         aws_route_table.private_route_table
     ]
 
-    subnet_id = element(aws_subnet.private.*.id, count.index)
+    count = length(aws_subnet.private[*].id)
+    subnet_id = element(aws_subnet.private[*].id, count.index)
     route_table_id  = aws_route_table.private_route_table.id
 }
