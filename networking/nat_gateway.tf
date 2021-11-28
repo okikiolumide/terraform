@@ -1,3 +1,5 @@
+# Creating multiple elastic IP for NAT gateways
+
 resource "aws_eip" "nat_eip" {
         count = var.preferred_number_of_public_subnets == null ? length(data.aws_availability_zones.available.names) : var.preferred_number_of_public_subnets
         vpc = true
@@ -9,7 +11,10 @@ resource "aws_eip" "nat_eip" {
             }
             )
     }
-        resource "aws_nat_gateway" "nat" {
+
+# Creating NAT Gateway to connect resources in private subnets to the internet
+
+resource "aws_nat_gateway" "nat" {
         count = var.preferred_number_of_public_subnets == null ? length(data.aws_availability_zones.available.names) : var.preferred_number_of_public_subnets
         allocation_id = aws_eip.nat_eip[count.index].id
         subnet_id = element(aws_subnet.public.*.id, count.index)

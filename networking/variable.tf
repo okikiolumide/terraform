@@ -33,13 +33,28 @@ default = null
 variable "environment" {
     default = "dev"
 }
+
+variable "ami" {
+    default = "ami-083654bd07b5da81d"
+}
+
+variable "instance_type" {
+   default = "t2.micro"
+}
+
+variable "key_name" {
+    default = "master-key"
+} 
+
 variable "default_tags" {
 
     default = {
-        Env     = "Dev"
-        Owner   = "DevOps Team"
-        Project = "AWS Infrastructure IaC" 
+        Environment     = "Dev"
+        ManagedBy       = "DevOps Team"
+        Project         = "AWS Infrastructure IaC"
+         
+
     }
      
-     description = "Default tags for AWS resource"
+     description        = "Default tags for AWS resource"
 }
