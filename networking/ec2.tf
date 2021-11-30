@@ -4,16 +4,17 @@ resource "aws_instance" "public" {
     ami = var.ami
     instance_type = var.instance_type
     vpc_security_group_ids = [
-        aws_security_group.master_sg.id
+        aws_security_group.bastion_sg.id
     ]
 
     user_data = <<EOF
       #!/bin/bash
-      echo "updating server and installing packages"
-      apt update -y
-      apt install software-properties-common -y
-      add-apt-repository --yes --update ppa:ansible/ansible
-      apt install -y ansible git
+      echo "Hello, welcome to Bastion server"
+      # echo "updating server and installing packages"
+      # apt update -y
+      # apt install software-properties-common -y
+      # add-apt-repository --yes --update ppa:ansible/ansible
+      # apt install -y ansible git
       EOF
   
     
@@ -26,6 +27,6 @@ resource "aws_instance" "public" {
     source_dest_check = false
 
     tags = {
-        Name = "master-TF${count.index}"
+        Name = "bastion-TF${count.index}"
     }
 }   

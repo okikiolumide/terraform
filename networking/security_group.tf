@@ -1,6 +1,6 @@
 #
 
-resource "aws_security_group" "master_sg" {
+resource "aws_security_group" "bastion_sg" {
     name = "vpc_web_sg"
     description = "Allow incoming HTTP connections."
      vpc_id = aws_vpc.main.id
@@ -35,11 +35,62 @@ resource "aws_security_group" "master_sg" {
         protocol = "-1"
         cidr_blocks = ["0.0.0.0/0"]
     }
-
-   
     
     tags = {
-    Name = "master-SG"
+    Name = "bastion-SG"
     Environment = var.environment
     }
+}
+
+resource "aws_security_group" "my-alb-sg" {
+    name = "my-alb-sg"
+    vpc_id = aws_vpc.main.id
+}
+
+resource "aws_security_group_rule" "inbound_http" {
+    from_port = 80
+    protocol = "tcp"
+    security_group_id = aws_security_group.my-alb-sg.id
+    to_port = 80
+    type = "ingress"
+    cidr_blocks = ["0.0.0.0/0"]
+}
+
+resource "aws_security_group_rule" "outbound_all" {
+    from_port = 0
+    protocol = "-1"
+    security_group_id = aws_security_group.my-alb-sg.id
+    to_port = 0
+    type = "egress"
+    cidr_blocks = ["0.0.0.0/0"]
+}
+
+# Auto Scaling Group - SG
+resource "aws_security_group" "my-asg-sg" {
+    name = "my-asg-sg"
+    vpc_id = aws_vpc.main.id
+}
+resource "aws_security_group_rule" "inbound_ssh-asg" {
+    from_port = 22
+    protocol = "tcp"
+    security_group_id = aws_security_group.my-asg-sg.id
+    to_port = 22
+    type = "ingress"
+    cidr_blocks = ["0.0.0.0/0"]
+}
+resource "aws_security_group_rule" "inbound_http-asg" {
+    from_port = 80
+    protocol = "tcp"
+    security_group_id = aws_security_group.my-asg-sg.id
+    to_port = 80
+    type = "ingress"
+    cidr_blocks = ["0.0.0.0/0"]
+}
+resource "aws_security_group_rule" "outbound_all-asg" {
+    from_port = 0
+    protocol = "-1"
+    security_group_id = aws_security_group.my-asg-sg.id
+    to_port = 0
+    type = "egress"
+    cidr_blocks = ["0.0.0.0/0"]
 }
