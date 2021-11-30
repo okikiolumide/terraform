@@ -15,3 +15,5 @@ preferred_number_of_public_subnets = 2
 preferred_number_of_private_subnets = 2
 
 environment = "dev"
+
+key_name = "master-key"

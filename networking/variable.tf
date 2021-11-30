@@ -46,6 +46,14 @@ variable "key_name" {
     default = "master-key"
 } 
 
+variable "account_no" {
+    default = "570098017106"
+}
+
+variable "kms_arn" {
+    default = "arn:aws:iam::570098017106:root"
+}
+
 variable "default_tags" {
 
     default = {

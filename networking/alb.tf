@@ -47,3 +47,36 @@ resource "aws_lb_listener" "my-test-alb-listner" {
         target_group_arn = aws_lb_target_group.my-target-group.arn
     }
 }
+
+# Creating private subnet ALB
+
+resource "aws_lb" "my-aws-alb-private" {
+    name = "my-test-alb-private"
+    internal = true
+    ip_address_type = "ipv4"
+    load_balancer_type = "application"
+    security_groups = [
+        aws_security_group.my-alb-sg.id,
+    ]
+    subnets = [
+        aws_subnet.private[0].id,
+        aws_subnet.private[1].id
+    ]
+
+    tags = {
+        Name = "my-test-alb-private"
+    }
+   
+}
+
+# Creating ALB Listener
+resource "aws_lb_listener" "my-test-alb-listener" {
+    load_balancer_arn = aws_lb.my-aws-alb-private.arn
+    port = 80
+    protocol = "HTTP"
+    default_action {
+        type = "forward"
+        target_group_arn = aws_lb_target_group.my-target-group.arn
+    }
+}
+

@@ -47,3 +47,15 @@ resource "aws_subnet" "private" {
 
 }
 
+# RDS Subnet
+resource "aws_db_subnet_group" "db_subnet" {
+    name       = "main"
+    subnet_ids = [
+        aws_subnet.private[0].id,
+        aws_subnet.private[1].id
+    ]
+
+  tags = {
+    Name = "My DB subnet group"
+  }
+}
