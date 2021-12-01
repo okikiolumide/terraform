@@ -6,7 +6,7 @@ resource "aws_efs_file_system" "efs" {
     }
 
     encrypted = true
-    kms_key_id = "${var.kms_arn}${aws_kms_key.kms.key_id}"
+    kms_key_id = aws_kms_key.kms.arn
 }
 
 # Creating Mount Volume

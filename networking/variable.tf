@@ -1,58 +1,29 @@
-variable "region" {
-    default = "us-east-1"
-}
+variable "region" {}
 
 provider "aws" {
     region = var.region
 }
 
-variable "vpc_cidr" {
-    default = "172.16.0.0/16"
-}
-variable "enable_dns_support" {
-    default = "true"
-}
-variable "enable_dns_hostnames" {
-    default ="true"
-}
-variable "enable_classiclink" {
-    default = "false"
-}
-variable "enable_classiclink_dns_support" {
-    default = "false"
-}
+variable "vpc_cidr" {}
+variable "enable_dns_support" {}
+variable "enable_dns_hostnames" {}
+variable "enable_classiclink" {}
+variable "enable_classiclink_dns_support" {}
 
-variable "preferred_number_of_public_subnets" {
-default = null
-}
+variable "preferred_number_of_public_subnets" {}
 
-variable "preferred_number_of_private_subnets" {
-default = null
-}
+variable "preferred_number_of_private_subnets" {}
 
-variable "environment" {
-    default = "dev"
-}
+variable "environment" {}
 
-variable "ami" {
-    default = "ami-083654bd07b5da81d"
-}
+variable "ami" {}
 
-variable "instance_type" {
-   default = "t2.micro"
-}
+variable "instance_type" {}
 
-variable "key_name" {
-    default = "master-key"
-} 
+variable "key_name" {} 
 
-variable "account_no" {
-    default = "570098017106"
-}
+variable "account_no" {}
 
-variable "kms_arn" {
-    default = "arn:aws:iam::570098017106:root"
-}
 
 variable "default_tags" {
 

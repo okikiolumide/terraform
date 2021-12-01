@@ -17,3 +17,9 @@ preferred_number_of_private_subnets = 2
 environment = "dev"
 
 key_name = "master-key"
+
+ami = "ami-083654bd07b5da81d"
+
+instance_type = "t2.micro"
+
+account_no = "570098017106"
